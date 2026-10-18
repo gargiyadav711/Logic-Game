@@ -1,9 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import navbarVintage from "./navbar-vintage.jpg";
-import landingImage from "./Landing2.jpg";
+import landingImage from "./Landing.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
 
 export default function LandingPage() {
@@ -68,7 +67,7 @@ export default function LandingPage() {
           <span className="divider-diamond">✧</span>
           <span />
         </div>
-        <button className="investigation-button" onClick={() => navigate("/game")}>
+        <button className="investigation-button" onClick={() => navigate("/dashboard")}>
           <span>START INVESTIGATION</span>
           <span className="button-arrow"></span>
         </button>
