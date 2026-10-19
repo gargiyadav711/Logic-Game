@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import navbarVintage from "./navbar-vintage.jpg";
-import landingImage from "./Landing.jpg";
+import landingImage from "./landing.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
 
 export default function LandingPage() {
