@@ -11,7 +11,6 @@ import {
 
 import { resetProgress } from "../services/storageService.js";
 import { useGame } from "../context/GameContext.jsx";
-
 import navbarVintage from "../pages/navbar-vintage.jpg";
 import magnifierImage from "../pages/detective-magnifier.jpg";
 

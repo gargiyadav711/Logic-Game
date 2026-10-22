@@ -13,12 +13,12 @@ export default function CaseCard({ item, status = {}, locked = false, onLaunch }
       <p className="mt-3 min-h-12 text-sm leading-6 text-white/65">{item.description}</p>
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
         <div className="text-xs text-white/55">
-          {locked ? <span className="flex items-center gap-1"><LockKeyhole size={14}/> Locked</span> :
-            status.completed ? <span className="flex items-center gap-1 text-emerald-200"><CheckCircle2 size={14}/> Solved · {status.score ?? 0}/100</span> :
-            <span>{status.stage && status.stage !== "investigation" ? "In progress" : "Not started"}</span>}
+          {locked ? <span className="flex items-center gap-1"><LockKeyhole size={14} /> Locked</span> :
+            status.completed ? <span className="flex items-center gap-1 text-emerald-200"><CheckCircle2 size={14} /> Solved · {status.score ?? 0}/100</span> :
+              <span>{status.stage && status.stage !== "investigation" ? "In progress" : "Not started"}</span>}
         </div>
         <button disabled={locked} onClick={() => onLaunch(item)} className="flex items-center gap-2 border border-amber-200/40 px-4 py-2 text-xs tracking-widest text-amber-100 hover:bg-amber-100/10 disabled:cursor-not-allowed disabled:opacity-50">
-          {locked ? <LockKeyhole size={14}/> : status.completed ? <RotateCcw size={14}/> : <Play size={14}/>}
+          {locked ? <LockKeyhole size={14} /> : status.completed ? <RotateCcw size={14} /> : <Play size={14} />}
           {locked ? "LOCKED" : status.completed ? "REPLAY" : status.stage ? "CONTINUE" : "OPEN CASE"}
         </button>
       </div>
