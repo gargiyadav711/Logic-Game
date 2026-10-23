@@ -7,15 +7,16 @@ import navbarVintage from "./navbar-vintage.jpg";
 import CASE1 from "./CASE1.jpeg";
 import CASE2 from "./CASE2.jpeg";
 import CASE3 from "./CASE3.jpeg";
+import { useGame } from "../context/GameContext.jsx";
 import CaseButton from "../components/CaseButton";
-import { createMysteryCase } from "../services/aiCaseService";
-import {Search,FileText,Fingerprint,LockKeyhole,LogOut,ChevronLeft,ChevronRight,} from "lucide-react";
+import { Search, FileText, Fingerprint, LockKeyhole, LogOut, ChevronLeft, ChevronRight, } from "lucide-react";
+
 const cases = [
   {
     id: "001",
     title: "The Perfect Alibi",
     difficulty: "EASY",
-    description:"A suspicious timeline, conflicting statements, and one alibi that may not hold up.",
+    description: "A suspicious timeline, conflicting statements, and one alibi that may not hold up.",
     icon: Search,
     image: CASE1,
   },
@@ -23,7 +24,7 @@ const cases = [
     id: "002",
     title: "The Missing Evidence",
     difficulty: "MEDIUM",
-    description:"Evidence has disappeared. Examine the details and discover what someone is hiding.",
+    description: "Evidence has disappeared. Examine the details and discover what someone is hiding.",
     icon: FileText,
     image: CASE2,
   },
@@ -31,7 +32,7 @@ const cases = [
     id: "003",
     title: "The Final Suspect",
     difficulty: "HARD",
-    description:"Every suspect has a story. Find the contradiction that reveals the truth.",
+    description: "Every suspect has a story. Find the contradiction that reveals the truth.",
     icon: Fingerprint,
     image: CASE3,
   },
@@ -40,6 +41,8 @@ const cases = [
 export default function Dashboard() {
   const navigate = useNavigate();
   const [activeCase, setActiveCase] = useState(0);
+  
+  const { activateCase } = useGame();
   const [loadingId, setLoadingId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const previousCase = () => {
@@ -60,51 +63,78 @@ export default function Dashboard() {
     return "left";
   };
 
-  const handleLaunchCase = async (selectedCase) => {
-    if (loadingId !== null) return;
-    try {
-      setLoadingId(selectedCase.id);
-      setErrorMessage("");
-      const difficulty =selectedCase.difficulty.charAt(0) +selectedCase.difficulty.slice(1).toLowerCase();
-      const caseData = await createMysteryCase(difficulty);
-      const savedCase = {
-        ...caseData,
-        selectedCaseId: selectedCase.id,
-        archiveTitle: selectedCase.title,
-        archiveDifficulty: selectedCase.difficulty,
-      };
-      localStorage.setItem("current_active_case",JSON.stringify(savedCase));
-      localStorage.setItem(`perfect-alibi-generated-case-${caseData.id}`,JSON.stringify(savedCase));
-      localStorage.setItem("perfect-alibi-current-case",caseData.id);
-      navigate("/investigation");
-    } catch (error) {
-      console.error("Failed to generate mystery case:", error);
-      setErrorMessage(
-        error.message ||
-          "Unable to generate the case. Please try again."
+  
+const handleLaunchCase = async (selectedCase) => {
+  if (loadingId !== null) return;
+
+  try {
+    setLoadingId(selectedCase.id);
+    setErrorMessage("");
+
+    // Select the canonical case from data/cases.js via GameContext.
+    const activated = activateCase(selectedCase.id);
+
+    if (!activated) {
+      throw new Error(
+        `Could not find case ${selectedCase.id} in data/cases.js.`
       );
-    } finally {
-      setLoadingId(null);
     }
-  };
+
+    // Save the selected archive case consistently.
+    const canonicalCase = {
+      id: selectedCase.id,
+      selectedCaseId: selectedCase.id,
+      title: selectedCase.title,
+      difficulty: selectedCase.difficulty,
+      archiveTitle: selectedCase.title,
+      archiveDifficulty: selectedCase.difficulty,
+    };
+
+    localStorage.setItem(
+      "current_active_case",
+      JSON.stringify(canonicalCase)
+    );
+
+    localStorage.setItem(
+      "perfect-alibi-current-case",
+      selectedCase.id
+    );
+
+    localStorage.setItem(
+      `perfect-alibi-generated-case-${selectedCase.id}`,
+      JSON.stringify(canonicalCase)
+    );
+
+    navigate("/investigation");
+  } catch (error) {
+    console.error("Failed to launch mystery case:", error);
+
+    setErrorMessage(
+      error.message || "Unable to open the case. Please try again."
+    );
+  } finally {
+    setLoadingId(null);
+  }
+};
+
 
   return (
     <main className="dashboard-page"
       style={{
         backgroundImage: `url(${DashboardImage})`,
       }}>
-      <div className="dashboard-overlay" aria-hidden="true"/>
+      <div className="dashboard-overlay" aria-hidden="true" />
       <div className="dashboard-content">
         <nav className="dashboard-navbar">
           <div className="navbar-image">
-            <img src={magnifierImage}alt="Detective magnifying glass"/>
+            <img src={magnifierImage} alt="Detective magnifying glass" />
           </div>
           <div className="navbar-content">
             <div className="navbar-brand">
               <h1>The Deduction Matrix</h1>
             </div>
             <div className="navbar-actions">
-              <button type="button" onClick={() => navigate("/")}className="exit-button">
+              <button type="button" onClick={() => navigate("/")} className="exit-button">
                 <LogOut size={20} strokeWidth={1.5} />
                 <span>EXIT</span>
               </button>
@@ -114,7 +144,7 @@ export default function Dashboard() {
         <section className="introduction-section">
           <div className="introduction-panel">
             <div className="introduction-image">
-              <img src={WhoImage} alt="Detective investigation"/>
+              <img src={WhoImage} alt="Detective investigation" />
               <div className="introduction-image-overlay" />
             </div>
 
@@ -198,7 +228,7 @@ export default function Dashboard() {
                         </div>
                         <div className="case-details">
                           <div className="case-icon">
-                            <Icon size={29} strokeWidth={1.5}/>
+                            <Icon size={29} strokeWidth={1.5} />
                           </div>
                           <h3>{item.title}</h3>
                           <p>{item.description}</p>
@@ -231,7 +261,7 @@ export default function Dashboard() {
                   aria-current={
                     index === activeCase ? "true" : undefined
                   }
-                  className={`carousel-indicator ${index === activeCase? "carousel-indicator-active" : ""}`}
+                  className={`carousel-indicator ${index === activeCase ? "carousel-indicator-active" : ""}`}
                 />
               ))}
             </div>

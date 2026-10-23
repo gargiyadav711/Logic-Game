@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useGame } from "../context/GameContext.jsx";
 import { validateStatementChallenge } from "../services/validationService.js";
-import { LayoutDashboard,Search,Users, Network,Clock3,Brain,ArrowLeft,} from "lucide-react";
+import { LayoutDashboard, Search, Users, Network, Clock3, Brain, ArrowLeft, } from "lucide-react";
 import sidebarImage from "./sidebar.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
 import backdropImage from "./backdrop.jpg";
@@ -52,7 +52,7 @@ export default function Interrogation() {
   const evidenceIds = caseProgress.collectedEvidenceIds || [];
   const challenge = async (statement) => {
     if (loading[statement.id]) return;
-    setLoading((prev) => ({...prev,[statement.id]: true,}));
+    setLoading((prev) => ({ ...prev, [statement.id]: true, }));
     try {
       const result = await validateStatementChallenge(
         c,
@@ -68,7 +68,7 @@ export default function Interrogation() {
       if (result.status === "contradicted") {
         updateCaseProgress({
           challengedStatementIds: [
-            ...new Set([...(caseProgress.challengedStatementIds || []),statement.id,]),
+            ...new Set([...(caseProgress.challengedStatementIds || []), statement.id,]),
           ],
           stage: "interrogation",
         });
@@ -454,78 +454,109 @@ export default function Interrogation() {
           }
         }
 
-        @media (max-width: 650px) {
-          .interrogation-app {
-            display: block;
-          }
+@media (max-width: 650px) {
+  .interrogation-app {
+    display: block;
+  }
 
-          .interrogation-sidebar {
-            position: relative;
-            width: 100%;
-            height: auto;
-            max-height: none;
-            overflow: visible;
-          }
+  .interrogation-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
 
-          .interrogation-brand {
-            min-height: 85px;
-            padding: 10px 16px;
-          }
+  .interrogation-brand {
+    min-height: 85px;
+    padding: 10px 16px;
+  }
 
-          .interrogation-brand-image {
-            width: 50px;
-            height: 58px;
-          }
+  .interrogation-brand-image {
+    width: 50px;
+    height: 58px;
+  }
 
-          .interrogation-nav-heading {
-            margin: 16px 16px 8px;
-          }
+  .interrogation-nav-heading {
+    margin: 12px 16px 6px;
+  }
 
-          .interrogation-nav {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 5px;
-            padding: 0 10px 14px;
-          }
+  /* Horizontal sliding mobile navbar */
+  .interrogation-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+    padding: 0 12px 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
 
-          .interrogation-nav-link {
-            gap: 8px;
-            min-height: 40px;
-            padding: 9px;
-            font-size: 11px;
-          }
+  .interrogation-nav::-webkit-scrollbar {
+    display: none;
+  }
 
-          .interrogation-sidebar-footer {
-            display: none;
-          }
+  .interrogation-nav-link {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: auto;
+    min-height: 38px;
+    padding: 9px 12px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    font-size: 11px;
+    white-space: nowrap;
+  }
 
-          .interrogation-main {
-            min-height: 70vh;
-            margin-left: 0;
-            background-attachment: scroll;
-          }
+  .interrogation-nav-link.active {
+    border-color: transparent;
+    border-bottom-color: #d7b778;
+    background: rgba(215, 183, 120, 0.12);
+    color: #f5edd2;
+  }
 
-          .interrogation-content {
-            padding: 32px 18px 44px;
-          }
+  .interrogation-nav-icon {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+  }
 
-          .interrogation-title {
-            font-size: 34px;
-          }
+  .interrogation-sidebar-footer {
+    display: none;
+  }
 
-          .interrogation-description {
-            font-size: 13px;
-          }
+  .interrogation-main {
+    min-height: 70vh;
+    margin-left: 0;
+    background-attachment: scroll;
+  }
 
-          .interrogation-statement-card {
-            padding: 16px;
-          }
+  .interrogation-content {
+    padding: 32px 18px 44px;
+  }
 
-          .interrogation-quote {
-            font-size: 17px;
-          }
-        }
+  .interrogation-title {
+    font-size: 34px;
+  }
 
+  .interrogation-description {
+    font-size: 13px;
+  }
+
+  .interrogation-statement-card {
+    padding: 16px;
+  }
+
+  .interrogation-quote {
+    font-size: 17px;
+  }
+}
         @media (prefers-reduced-motion: reduce) {
           .interrogation-nav-link,
           .interrogation-back-link,
@@ -540,7 +571,7 @@ export default function Interrogation() {
       <div className="interrogation-app">
         <aside className="interrogation-sidebar">
           <div className="interrogation-brand">
-            <img src={magnifierImage} alt="" className="interrogation-brand-image"/>
+            <img src={magnifierImage} alt="" className="interrogation-brand-image" />
             <div className="interrogation-brand-copy">
               <h1 className="interrogation-brand-title">
                 The Deduction Matrix
@@ -559,8 +590,7 @@ export default function Interrogation() {
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `interrogation-nav-link ${
-                    isActive ? "active" : ""
+                  `interrogation-nav-link ${isActive ? "active" : ""
                   }`
                 }
               >
@@ -606,9 +636,9 @@ export default function Interrogation() {
                   (evidence) => evidenceIds.includes(evidence.id)
                 );
                 const statementFeedback = feedback[statement.id];
-                const isError =statementFeedback?.status === "error";
+                const isError = statementFeedback?.status === "error";
                 return (
-                  <article key={statement.id}className="interrogation-statement-card">
+                  <article key={statement.id} className="interrogation-statement-card">
                     <p className="interrogation-suspect-name">
                       {suspect?.name || "Unknown suspect"}
                     </p>
@@ -619,15 +649,14 @@ export default function Interrogation() {
                       Related evidence:{" "}
                       {related.length
                         ? related
-                            .map(
-                              (evidence) =>
-                                `${evidence.title}${
-                                  evidenceIds.includes(evidence.id)
-                                    ? " ✓"
-                                    : ""
-                                }`
-                            )
-                            .join(" · ")
+                          .map(
+                            (evidence) =>
+                              `${evidence.title}${evidenceIds.includes(evidence.id)
+                                ? " ✓"
+                                : ""
+                              }`
+                          )
+                          .join(" · ")
                         : "No related evidence listed"}
                     </p>
                     <button
@@ -647,9 +676,8 @@ export default function Interrogation() {
                       <p
                         role="status"
                         aria-live="polite"
-                        className={`interrogation-feedback ${
-                          isError ? "interrogation-feedback-error" : ""
-                        }`}
+                        className={`interrogation-feedback ${isError ? "interrogation-feedback-error" : ""
+                          }`}
                       >
                         <strong>
                           {statementFeedback.status.toUpperCase()}

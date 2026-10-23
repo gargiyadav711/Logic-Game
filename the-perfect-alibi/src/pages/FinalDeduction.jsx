@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext.jsx";
 import { validateFinalAccusation } from "../services/validationService.js";
 import { saveAttempt } from "../services/storageService.js";
-import { LayoutDashboard,Search,Users,Network,Clock3,Brain,ArrowLeft,} from "lucide-react";
+import { LayoutDashboard, Search, Users, Network, Clock3, Brain, ArrowLeft, } from "lucide-react";
 import sidebarImage from "./sidebar.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
 import backdropImage from "./backdrop.jpg";
@@ -30,7 +30,7 @@ export default function FinalDeduction() {
     caseProgress.explanation || ""
   );
   const [evidenceIds, setEvidenceIds] = useState(
-    caseProgress.selectedEvidenceIds ||caseProgress.collectedEvidenceIds ||[]
+    caseProgress.selectedEvidenceIds || caseProgress.collectedEvidenceIds || []
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -66,7 +66,7 @@ export default function FinalDeduction() {
   }
 
   const toggleEvidence = (id, checked) => {
-    setEvidenceIds((previous) => checked ? [...new Set([...previous, id])]: previous.filter((item) => item !== id));
+    setEvidenceIds((previous) => checked ? [...new Set([...previous, id])] : previous.filter((item) => item !== id));
   };
   const submit = async (event) => {
     event.preventDefault();
@@ -125,7 +125,7 @@ export default function FinalDeduction() {
     } catch (err) {
       setError(
         err.message ||
-          "Could not validate your accusation. Your progress has been preserved."
+        "Could not validate your accusation. Your progress has been preserved."
       );
     } finally {
       setLoading(false);
@@ -532,73 +532,107 @@ export default function FinalDeduction() {
           }
         }
 
-        @media (max-width: 650px) {
-          .deduction-app {
-            display: block;
-          }
+       
+@media (max-width: 650px) {
+  .deduction-app {
+    display: block;
+  }
 
-          .deduction-sidebar {
-            position: relative;
-            width: 100%;
-            height: auto;
-            max-height: none;
-            overflow: visible;
-          }
+  .deduction-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
 
-          .deduction-brand {
-            min-height: 85px;
-            padding: 10px 16px;
-          }
+  .deduction-brand {
+    min-height: 85px;
+    padding: 10px 16px;
+  }
 
-          .deduction-brand-image {
-            width: 50px;
-            height: 58px;
-          }
+  .deduction-brand-image {
+    width: 50px;
+    height: 58px;
+  }
 
-          .deduction-nav-heading {
-            margin: 16px 16px 8px;
-          }
+  .deduction-nav-heading {
+    margin: 12px 16px 6px;
+  }
 
-          .deduction-nav {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 5px;
-            padding: 0 10px 14px;
-          }
+  /* Horizontal sliding mobile navbar */
+  .deduction-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 100%;
+    padding: 0 12px 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
 
-          .deduction-nav-link {
-            gap: 8px;
-            min-height: 40px;
-            padding: 9px;
-            font-size: 11px;
-          }
+  .deduction-nav::-webkit-scrollbar {
+    display: none;
+  }
 
-          .deduction-sidebar-footer {
-            display: none;
-          }
+  .deduction-nav-link {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: auto;
+    min-height: 38px;
+    padding: 9px 12px;
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    font-size: 11px;
+    white-space: nowrap;
+  }
 
-          .deduction-main {
-            min-height: 70vh;
-            margin-left: 0;
-            background-attachment: scroll;
-          }
+  .deduction-nav-link.active {
+    border-color: transparent;
+    border-bottom-color: #d7b778;
+    background: rgba(215, 183, 120, 0.12);
+    color: #f5edd2;
+  }
 
-          .deduction-content {
-            padding: 32px 18px 44px;
-          }
+  .deduction-nav-icon {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+  }
 
-          .deduction-title {
-            font-size: 34px;
-          }
+  .deduction-sidebar-footer {
+    display: none;
+  }
 
-          .deduction-description {
-            font-size: 13px;
-          }
+  .deduction-main {
+    min-height: 70vh;
+    margin-left: 0;
+    background-attachment: scroll;
+  }
 
-          .deduction-submit {
-            width: 100%;
-          }
-        }
+  .deduction-content {
+    padding: 32px 18px 44px;
+  }
+
+  .deduction-title {
+    font-size: 34px;
+  }
+
+  .deduction-description {
+    font-size: 13px;
+  }
+
+  .deduction-submit {
+    width: 100%;
+  }
+}
+
 
         @media (prefers-reduced-motion: reduce) {
           .deduction-nav-link,
@@ -670,7 +704,7 @@ export default function FinalDeduction() {
               supports your conclusion, and explain how the facts connect.
             </p>
             <div className="deduction-divider" />
-            <form onSubmit={submit}className="deduction-form">
+            <form onSubmit={submit} className="deduction-form">
               <label className="deduction-field-label">
                 Accuse a suspect
                 <select
@@ -700,9 +734,8 @@ export default function FinalDeduction() {
                     return (
                       <label
                         key={evidence.id}
-                        className={`deduction-evidence-card ${
-                          selected ? "selected" : ""
-                        }`}
+                        className={`deduction-evidence-card ${selected ? "selected" : ""
+                          }`}
                       >
                         <input
                           type="checkbox"
@@ -753,7 +786,7 @@ export default function FinalDeduction() {
                 disabled={loading}
                 className="deduction-submit"
               >
-                {loading ? "VALIDATING...": "SUBMIT FINAL ACCUSATION"}
+                {loading ? "VALIDATING..." : "SUBMIT FINAL ACCUSATION"}
               </button>
             </form>
           </section>
