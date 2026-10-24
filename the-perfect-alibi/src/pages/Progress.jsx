@@ -786,7 +786,7 @@ const styles = `
     }
 
     .progress-sidebar {
-      position: relative;
+      position: sticky;
       width: 100%;
       height: auto;
       min-height: 0;

@@ -710,7 +710,7 @@ const styles = `
     }
 
     .solved-sidebar {
-      position: relative;
+      position: sticky;
       width: 100%;
       min-width: 0;
       height: auto;

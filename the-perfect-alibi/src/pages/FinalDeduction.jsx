@@ -539,7 +539,7 @@ export default function FinalDeduction() {
   }
 
   .deduction-sidebar {
-    position: relative;
+    position: sticky;
     width: 100%;
     height: auto;
     max-height: none;

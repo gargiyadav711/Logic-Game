@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 *,
 *::before,
 *::after {
@@ -678,13 +679,17 @@ img.banner-magnifier {
 }
 
 .dashboard-navbar {
-  position: relative;
-  display: flex;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 90px;
-  background: rgba(16, 11, 7, 0.55);
-  border-bottom: 1px solid rgba(197, 163, 108, 0.2);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  background: rgba(16, 11, 7, 0.95);
+  border-bottom: 1px solid rgba(215, 183, 120, 0.25);
+  isolation: isolate;
 }
 
 .navbar-image {
@@ -770,12 +775,14 @@ img.banner-magnifier {
   outline-offset: 4px;
 }
 
+
 .introduction-section {
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 70px 20px 70px;
+  padding: 165px 20px 70px;
 }
+
 
 .introduction-panel {
   display: grid;
@@ -1316,9 +1323,9 @@ img.banner-magnifier {
     height: 16px;
   }
 
-  .introduction-section {
-    padding: 32px 16px 40px;
-  }
+ .introduction-section {
+  padding: 92px 16px 40px;
+}
 
   .introduction-panel {
     grid-template-columns: 1fr;
@@ -1569,5 +1576,880 @@ img.banner-magnifier {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+}
+
+.landing-page {
+  position: relative;
+  isolation: isolate;
+  perspective: 1200px;
+  overflow: hidden;
+  background: #100b07;
+}
+
+.landing-background {
+  position: absolute;
+  inset: -3%;
+  z-index: -3;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+  animation: backgroundDrift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(30, 17, 8, 0.12),
+      rgba(9, 6, 4, 0.68) 85%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(12, 8, 5, 0.12),
+      rgba(12, 8, 5, 0.3)
+    );
+}
+
+.ambient-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-particles span {
+  position: absolute;
+  left: var(--x);
+  bottom: -20px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e8bd76;
+  box-shadow: 0 0 10px 2px rgba(232, 189, 118, 0.35);
+  opacity: 0;
+  animation: floatingDust var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes floatingDust {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  75% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate3d(30px, -105vh, 80px) scale(1.3);
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundDrift {
+  from {
+    transform: scale(1.04) translate3d(-5px, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(5px, -5px, 0);
+  }
+}
+
+.vintage-banner {
+  position: relative;
+  z-index: 5;
+  transform-style: preserve-3d;
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.45),
+    0 3px 0 rgba(187, 135, 64, 0.22);
+  border-bottom: 1px solid rgba(207, 164, 98, 0.4);
+  animation: bannerReveal 1.2s ease-out both;
+}
+
+.banner-depth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 221, 165, 0.08),
+    transparent 35%,
+    rgba(0, 0, 0, 0.2)
+  );
+}
+
+@keyframes bannerReveal {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-8deg) translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0) translateY(0);
+  }
+}
+
+.banner-magnifier {
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  filter: drop-shadow(8px 12px 7px rgba(0, 0, 0, 0.55));
+  animation: magnifierFloat 5s ease-in-out infinite;
+  transition: filter 0.4s ease;
+}
+
+.banner-magnifier:hover {
+  filter:
+    drop-shadow(0 0 12px rgba(218, 167, 91, 0.5))
+    drop-shadow(8px 12px 7px rgba(0, 0, 0, 0.55));
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  transform-style: preserve-3d;
+  animation: heroReveal 1.4s 0.15s ease-out both;
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) translateY(35px) translateZ(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1200px) translateY(0) translateZ(0);
+  }
+}
+
+.fantasy-title {
+  position: relative;
+  color: #f5e5bf;
+  text-shadow:
+    0 1px 0 #d7b778,
+    0 2px 0 #a77b42,
+    0 3px 0 #76502a,
+    0 5px 12px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(205, 151, 77, 0.16);
+  transform: translateZ(35px);
+  transition:
+    transform 0.5s ease,
+    text-shadow 0.5s ease;
+}
+
+.fantasy-title:hover {
+  transform: translateZ(55px) rotateX(2deg);
+  text-shadow:
+    0 1px 0 #f5d99b,
+    0 3px 0 #b98b4b,
+    0 6px 0 #76502a,
+    0 12px 24px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(218, 167, 91, 0.4);
+}
+
+.hero-eyebrow,
+.hero-subtitle,
+.hero-divider {
+  position: relative;
+  transform: translateZ(18px);
+}
+
+.investigation-button {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(25px);
+  border: 1px solid #bd9251;
+  background: linear-gradient(
+    145deg,
+    #49301a,
+    #21150c 48%,
+    #100b07
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 170, 0.3),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55),
+    0 7px 0 #100a05,
+    0 13px 22px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.investigation-button::before {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -55%;
+  width: 35%;
+  height: 260%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 225, 170, 0.35),
+    transparent
+  );
+  transform: rotate(25deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.investigation-button:hover {
+  transform: translateY(-4px) translateZ(35px);
+  border-color: #f1ce8c;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 170, 0.45),
+    0 10px 0 #100a05,
+    0 18px 30px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(195, 139, 62, 0.2);
+}
+
+.investigation-button:hover::before {
+  left: 130%;
+}
+
+.investigation-button:active {
+  transform: translateY(3px) translateZ(15px);
+  box-shadow: 0 3px 0 #100a05;
+}
+
+.hero-stamp {
+  position: absolute;
+  right: 4%;
+  bottom: -65px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 14px;
+  border: 2px solid rgba(171, 92, 58, 0.65);
+  color: rgba(190, 105, 70, 0.8);
+  font-family: serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-align: center;
+  transform: rotate(-12deg) translateZ(15px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-background,
+  .ambient-particles span,
+  .vintage-banner,
+  .banner-magnifier,
+  .hero-content {
+    animation: none !important;
+  }
+
+  .fantasy-title,
+  .investigation-button {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-stamp {
+    display: none;
+  }
+
+  .banner-magnifier {
+    max-width: 30%;
+  }
+
+  .fantasy-title {
+    transform: none;
+  }
+
+  .fantasy-title:hover {
+    transform: none;
+  }
+}
+
+
+
+.vector-wordmark {
+  position: relative;
+  width: min(100%, 1100px);
+  height: clamp(120px, 20vw, 230px);
+  margin-inline: auto;
+  overflow: hidden;
+  background: #17110d;
+  border: 1px solid rgba(196, 157, 94, 0.25);
+  box-shadow:
+    0 0 35px rgba(0, 0, 0, 0.35),
+    inset 0 0 30px rgba(196, 157, 94, 0.04);
+}
+
+.vector-wordmark canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  .vector-wordmark {
+    height: 125px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vector-wordmark {
+    border-color: rgba(196, 157, 94, 0.4);
+  }
+}
+.landing-wordmark {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;
+}
+
+/* ===== MYSTERY VIDEO SECTION ===== */
+
+.mystery-video-section {
+  position: relative;
+  z-index: 10;
+  display: block;
+  width: min(760px, 90%);
+  margin: 45px auto 35px;
+  text-align: center;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Section heading */
+
+.video-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  color: #c9a96e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.video-eyebrow::before,
+.video-eyebrow::after {
+  content: "";
+  width: 35px;
+  height: 1px;
+  background: #a88952;
+}
+
+/* Vintage gold video frame */
+
+.mystery-video-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 169, 110, 0.75);
+  background: rgba(13, 11, 9, 0.96);
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.55),
+    0 0 35px rgba(201, 169, 110, 0.09),
+    inset 0 0 15px rgba(201, 169, 110, 0.05);
+  box-sizing: border-box;
+}
+
+/* Video player */
+
+.mystery-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #050505;
+  border: none;
+  outline: none;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Optional gold corner decorations */
+
+.video-corner {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border-color: #d2b477;
+  border-style: solid;
+  pointer-events: none;
+}
+
+.video-corner-tl {
+  top: 3px;
+  left: 3px;
+  border-width: 1px 0 0 1px;
+}
+
+.video-corner-tr {
+  top: 3px;
+  right: 3px;
+  border-width: 1px 1px 0 0;
+}
+
+.video-corner-bl {
+  bottom: 3px;
+  left: 3px;
+  border-width: 0 0 1px 1px;
+}
+
+.video-corner-br {
+  right: 3px;
+  bottom: 3px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Caption */
+
+.video-caption {
+  margin: 17px 0 0;
+  color: #c4b69b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+}
+
+/* Subtle entrance animation */
+
+@keyframes mysteryVideoReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mystery-video-section {
+  animation: mysteryVideoReveal 1s ease-out both;
+}
+
+/* Mobile responsive design */
+
+@media (max-width: 600px) {
+  .mystery-video-section {
+    width: 94%;
+    margin: 30px auto 25px;
+  }
+
+  .video-eyebrow {
+    gap: 9px;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
+
+  .video-eyebrow::before,
+  .video-eyebrow::after {
+    width: 22px;
+  }
+
+  .mystery-video-frame {
+    padding: 5px;
+  }
+
+  .video-caption {
+    font-size: 12px;
+    padding: 0 8px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .mystery-video-section {
+    animation: none;
+  }
+}
+
+.light-shaft-wordmark {
+  position: relative;
+  width: min(100%, 1100px);
+  height: 320px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: transparent;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.light-shaft-wordmark canvas {
+  mix-blend-mode: screen;
+}
+
+.mystery-video-inner {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.mystery-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .light-shaft-wordmark {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .light-shaft-wordmark {
+    height: 170px;
+  }
+}
+
+/* Animated title blends into the landing background */
+.light-shaft-wordmark {
+  position: relative;
+  width: min(100%, 1100px);
+  height: 320px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: transparent;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.light-shaft-wordmark canvas {
+  mix-blend-mode: screen;
+}
+
+/* Video section: no card, border, frame, or shadow */
+.mystery-video-section {
+  position: relative;
+  width: min(90%, 900px);
+  margin: 50px auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.mystery-video-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.mystery-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Video heading */
+.video-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 22px;
+  color: #e7c987;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-align: center;
+}
+
+.video-line {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c6a66b,
+    transparent
+  );
+}
+
+/* Caption */
+.video-caption {
+  margin-top: 20px;
+  color: #e8dcc4;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .light-shaft-wordmark {
+    height: 220px;
+  }
+
+  .mystery-video-section {
+    width: 94%;
+    margin: 35px auto;
+  }
+
+  .mystery-video {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .light-shaft-wordmark {
+    height: 170px;
+  }
+
+  .mystery-video {
+    max-height: 280px;
+  }
+
+  .video-eyebrow {
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  .video-line {
+    width: 24px;
+  }
+}
+
+/* ==========================================
+   GLYPHWALL EFFECT — THE DEDUCTION MATRIX
+========================================== */
+
+/* Keep the landing page as the main positioning context */
+.landing-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Hero section becomes the GlyphWall container */
+.landing-page .hero-content {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Animated GlyphWall background layer */
+.landing-page .glyph-wall-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.82;
+
+  /* Fade the characters at the top and bottom */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.65) 12%,
+    #000 28%,
+    #000 68%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.65) 12%,
+    #000 28%,
+    #000 68%,
+    transparent 100%
+  );
+}
+
+/* Canvas created by the GlyphWall React component */
+.landing-page .glyph-wall-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Keep hero content readable above the glyphs */
+.landing-page .hero-eyebrow,
+.landing-page .landing-wordmark,
+.landing-page .hero-subtitle,
+.landing-page .hero-divider,
+.landing-page .mystery-video-section,
+.landing-page .investigation-button,
+.landing-page .hero-stamp {
+  position: relative;
+}
+
+/* Give the GlyphWall a subtle golden atmosphere */
+.landing-page .glyph-wall-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(190, 143, 70, 0.09) 0%,
+    rgba(16, 11, 7, 0.02) 45%,
+    rgba(16, 11, 7, 0.28) 100%
+  );
+}
+
+/* Maintain the existing transparent LightShaft title */
+.landing-page .light-shaft-wordmark {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1100px);
+  height: 320px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Keep the video free from borders and frames */
+.landing-page .mystery-video-section {
+  position: relative;
+  z-index: 1;
+  width: min(90%, 900px);
+  margin: 45px auto 35px;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.landing-page .mystery-video-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.landing-page .mystery-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Responsive GlyphWall */
+@media (max-width: 768px) {
+  .landing-page .glyph-wall-layer {
+    opacity: 0.65;
+  }
+
+  .landing-page .glyph-wall-canvas {
+    opacity: 0.72;
+  }
+
+  .landing-page .light-shaft-wordmark {
+    height: 220px;
+  }
+
+  .landing-page .mystery-video-section {
+    width: 94%;
+    margin: 35px auto;
+  }
+
+  .landing-page .mystery-video {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page .glyph-wall-layer {
+    opacity: 0.5;
+  }
+
+  .landing-page .glyph-wall-canvas {
+    opacity: 0.65;
+  }
+
+  .landing-page .light-shaft-wordmark {
+    height: 170px;
+  }
+
+  .landing-page .mystery-video {
+    max-height: 280px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .landing-page .glyph-wall-canvas {
+    opacity: 0.35;
   }
 }

@@ -351,7 +351,7 @@ export default function Timeline() {
           }
 
           .timeline-sidebar {
-            position: relative;
+            position: sticky;
             width: 100%;
             height: auto;
             max-height: none;
