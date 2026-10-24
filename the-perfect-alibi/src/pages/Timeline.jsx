@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useGame } from "../context/GameContext.jsx";
 import TimelineEvent from "../components/TimelineEvent.jsx";
 import { validateTimeline } from "../services/logicEngine.js";
-import {LayoutDashboard,Search,Users,Network,Clock3,Brain,ArrowLeft,} from "lucide-react";
+import { LayoutDashboard, Search, Users, Network, Clock3, Brain, ArrowLeft, } from "lucide-react";
 import sidebarImage from "./sidebar.jpg";
 import backdropImage from "./backdrop.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
@@ -52,7 +52,7 @@ export default function Timeline() {
   }
   const canonical = (c.timeline || []).slice().sort((a, b) => a.order - b.order);
   const savedOrder = caseProgress.timelineOrder;
-  const ids =savedOrder?.length === canonical.length? savedOrder : canonical.map((event) => event.id);
+  const ids = savedOrder?.length === canonical.length ? savedOrder : canonical.map((event) => event.id);
   const events = ids.map((id) => canonical.find((event) => event.id === id)).filter(Boolean);
   const move = (index, delta) => {
     const target = index + delta;
@@ -345,69 +345,198 @@ export default function Timeline() {
           }
         }
 
-        @media (max-width: 650px) {
-          .timeline-app {
-            display: block;
-          }
+       
 
-          .timeline-sidebar {
-            position: sticky;
-            width: 100%;
-            height: auto;
-            max-height: none;
-            overflow: visible;
-          }
+@media (max-width: 650px) {
+  .timeline-app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+  }
 
-          .timeline-brand {
-            min-height: 85px;
-            padding: 10px 16px;
-          }
+  /* Mobile sidebar — matches Evidence Board */
+  .timeline-sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 
-          .timeline-brand-image {
-            width: 50px;
-            height: 58px;
-          }
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
 
-          .timeline-nav-heading {
-            margin: 16px 16px 8px;
-          }
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
 
-          .timeline-nav {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 5px;
-            padding: 0 10px 14px;
-          }
+    background-color: #19120d;
+    background-image: url("${sidebarImage}");
+    background-position: center;
+    background-size: cover;
 
-          .timeline-nav-link {
-            gap: 8px;
-            min-height: 40px;
-            padding: 9px;
-            font-size: 11px;
-          }
+    border-right: none;
+    border-bottom: 1px solid rgba(215, 183, 120, 0.2);
+  }
 
-          .timeline-sidebar-footer {
-            display: none;
-          }
+  .timeline-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 16px;
+    border-bottom: none;
+    overflow: visible;
+  }
 
-          .timeline-main {
-            min-height: 70vh;
-            margin-left: 0;
-            background-attachment: scroll;
-          }
+  .timeline-brand-image {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 42px;
+    margin-right: 0;
+  }
 
-          .timeline-content {
-            padding: 32px 18px 44px;
-          }
+  .timeline-brand-copy {
+    min-width: 0;
+  }
 
-          .timeline-title {
-            font-size: 34px;
-          }
+  .timeline-brand-title {
+    font-size: 17px;
+  }
 
-          .timeline-description {
-            font-size: 13px;
-          }
-        }
+  .timeline-brand-subtitle {
+    margin-top: 6px;
+    font-size: 8px;
+  }
+
+  .timeline-nav-heading,
+  .timeline-sidebar-footer {
+    display: none;
+  }
+
+  /* Horizontal scrolling navigation */
+  .timeline-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+
+    width: 100%;
+    margin-top: 0;
+    padding: 0 16px 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .timeline-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .timeline-nav-link {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 38px;
+    padding: 9px 10px;
+
+    border: 1px solid transparent;
+    color: #dfcdb0;
+    background: transparent;
+
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .timeline-nav-link:hover {
+    color: #fff0d0;
+    background: rgba(107, 75, 43, 0.5);
+  }
+
+  .timeline-nav-link.active {
+    border-color: #d7b778;
+    color: #21150b;
+    background: #d7b778;
+  }
+
+  .timeline-nav-icon {
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Main content below the navbar */
+  .timeline-main {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: 0;
+
+    background-attachment: scroll;
+  }
+
+  .timeline-content {
+    width: 100%;
+    padding: 30px 18px 44px;
+  }
+
+  .timeline-title {
+    font-size: 34px;
+  }
+
+  .timeline-description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .timeline-brand {
+    padding: 14px 12px;
+    gap: 8px;
+  }
+
+  .timeline-brand-image {
+    flex-basis: 38px;
+    width: 38px;
+    height: 42px;
+  }
+
+  .timeline-brand-title {
+    font-size: 16px;
+  }
+
+  .timeline-brand-subtitle {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+
+  .timeline-nav {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .timeline-main {
+    padding: 0;
+  }
+
+  .timeline-content {
+    padding: 26px 14px 36px;
+  }
+
+  .timeline-title {
+    font-size: 30px;
+  }
+}
+
+
 
         @media (prefers-reduced-motion: reduce) {
           .timeline-nav-link,
@@ -492,7 +621,7 @@ export default function Timeline() {
                 />
               ))}
             </div>
-            <Link to="/interrogation"className="timeline-continue">
+            <Link to="/interrogation" className="timeline-continue">
               Continue to interrogation →
             </Link>
           </section>

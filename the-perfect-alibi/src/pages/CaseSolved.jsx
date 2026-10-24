@@ -703,140 +703,255 @@ const styles = `
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-
-  @media (max-width: 700px) {
-    .solved-page {
-      flex-direction: column;
-    }
-
-    .solved-sidebar {
-      position: sticky;
-      width: 100%;
-      min-width: 0;
-      height: auto;
-      min-height: 0;
-      overflow: visible;
-    }
-
-    .solved-brand {
-      min-height: 82px;
-      padding: 10px 15px;
-    }
-
-    .solved-brand-image {
-      width: 48px;
-      height: 55px;
-    }
-
-    .solved-brand h1 {
-      font-size: 18px;
-    }
-
-    .solved-nav-heading {
-      padding: 15px 17px 10px;
-    }
-
-    .solved-navigation {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 5px;
-      padding: 0 10px 15px;
-    }
-
-    .solved-nav-link {
-      min-height: 41px;
-      gap: 8px;
-      padding: 0 9px;
-      font-size: 11px;
-    }
-
-    .solved-nav-link svg {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    .solved-sidebar-bottom {
-      display: none;
-    }
-
-    .solved-main {
-      min-height: auto;
-      padding: 29px 18px;
-    }
-
-    .solved-heading {
-      align-items: flex-start;
-      gap: 13px;
-      margin: 27px 0 22px;
-    }
-
-    .solved-heading-icon {
-      width: 48px;
-      height: 48px;
-    }
-
-    .solved-heading-icon svg {
-      width: 23px;
-      height: 23px;
-    }
-
-    .solved-heading h2 {
-      font-size: 30px;
-    }
-
-    .solved-subtitle {
-      font-size: 13px;
-    }
-
-    .solved-score-panel {
-      padding: 22px 18px;
-    }
-
-    .solved-score {
-      font-size: 51px;
-    }
-
-    .solved-score-seal {
-      width: 70px;
-      height: 70px;
-    }
-
-    .solved-breakdown-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  /* Mobile responsive navbar — matches Timeline / Evidence Board */
+@media (max-width: 650px) {
+  .solved-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
   }
 
-  @media (max-width: 390px) {
-    .solved-navigation {
-      grid-template-columns: 1fr;
-    }
+  .solved-sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 
-    .solved-topline {
-      align-items: flex-start;
-      flex-direction: column;
-    }
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
 
-    .solved-score-header {
-      align-items: flex-start;
-    }
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
 
-    .solved-score {
-      font-size: 44px;
-    }
+    background-color: #19120d;
+    background-image: url("${sidebarImage}");
+    background-position: center;
+    background-size: cover;
 
-    .solved-score-seal {
-      width: 62px;
-      height: 62px;
-    }
-
-    .solved-actions {
-      flex-direction: column;
-    }
-
-    .solved-primary-button,
-    .solved-secondary-button {
-      width: 100%;
-    }
+    border-right: none;
+    border-bottom: 1px solid rgba(215, 183, 120, 0.2);
   }
+
+  .solved-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 16px;
+    border-bottom: none;
+    overflow: visible;
+  }
+
+  .solved-brand-image {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 42px;
+    margin-right: 0;
+  }
+
+  .solved-brand-copy {
+    min-width: 0;
+  }
+
+  .solved-brand h1 {
+    font-size: 17px;
+  }
+
+  .solved-brand p {
+    margin-top: 6px;
+    font-size: 8px;
+  }
+
+  .solved-nav-heading,
+  .solved-sidebar-bottom {
+    display: none;
+  }
+
+  /* Horizontal scrolling navigation */
+  .solved-navigation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+
+    width: 100%;
+    margin-top: 0;
+    padding: 0 16px 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .solved-navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .solved-nav-link {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 38px;
+    padding: 9px 10px;
+
+    border: 1px solid transparent;
+    color: #dfcdb0;
+    background: transparent;
+
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .solved-nav-link:hover {
+    color: #fff0d0;
+    background: rgba(107, 75, 43, 0.5);
+  }
+
+  .solved-nav-active {
+    border-color: #d7b778;
+    color: #21150b;
+    background: #d7b778;
+  }
+
+  .solved-nav-active svg {
+    color: #21150b;
+  }
+
+  /* Main content below the navbar */
+  .solved-main {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 30px 18px 44px;
+    background-attachment: scroll;
+  }
+
+  .solved-content {
+    width: 100%;
+  }
+
+  .solved-heading {
+    align-items: flex-start;
+    gap: 13px;
+    margin: 27px 0 22px;
+  }
+
+  .solved-heading-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .solved-heading-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .solved-heading h2 {
+    font-size: 30px;
+  }
+
+  .solved-subtitle {
+    font-size: 13px;
+  }
+
+  .solved-score-panel {
+    padding: 22px 18px;
+  }
+
+  .solved-score {
+    font-size: 51px;
+  }
+
+  .solved-score-seal {
+    width: 70px;
+    height: 70px;
+  }
+
+  .solved-breakdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .solved-brand {
+    padding: 14px 12px;
+    gap: 8px;
+  }
+
+  .solved-brand-image {
+    flex-basis: 38px;
+    width: 38px;
+    height: 42px;
+  }
+
+  .solved-brand h1 {
+    font-size: 16px;
+  }
+
+  .solved-brand p {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+
+  .solved-navigation {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .solved-main {
+    padding: 26px 14px 36px;
+  }
+
+  .solved-topline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .solved-heading h2 {
+    font-size: 27px;
+  }
+
+  .solved-score-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .solved-score {
+    font-size: 44px;
+  }
+
+  .solved-score-seal {
+    width: 62px;
+    height: 62px;
+  }
+
+  .solved-score-seal svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .solved-breakdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .solved-actions {
+    flex-direction: column;
+  }
+
+  .solved-primary-button,
+  .solved-secondary-button {
+    width: 100%;
+  }
+}
 `;

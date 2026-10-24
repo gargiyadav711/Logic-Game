@@ -454,41 +454,86 @@ export default function Interrogation() {
           }
         }
 
+        /* Mobile responsive navbar — matches Timeline / Evidence Board */
 @media (max-width: 650px) {
   .interrogation-app {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
   }
 
   .interrogation-sidebar {
-    position: relative;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+
     width: 100%;
     height: auto;
+    min-height: 0;
     max-height: none;
     overflow: visible;
+
+    background-color: #19120d;
+    background-image: url("${sidebarImage}");
+    background-position: center;
+    background-size: cover;
+
+    border-right: none;
+    border-bottom: 1px solid rgba(215, 183, 120, 0.2);
   }
 
   .interrogation-brand {
-    min-height: 85px;
-    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 16px;
+    border-bottom: none;
+    overflow: visible;
   }
 
   .interrogation-brand-image {
-    width: 50px;
-    height: 58px;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 42px;
+    margin-right: 0;
   }
 
-  .interrogation-nav-heading {
-    margin: 12px 16px 6px;
+  .interrogation-brand-copy {
+    min-width: 0;
   }
 
-  /* Horizontal sliding mobile navbar */
+  .interrogation-brand-title {
+    font-size: 17px;
+  }
+
+  .interrogation-brand-subtitle {
+    margin-top: 6px;
+    font-size: 8px;
+  }
+
+  .interrogation-nav-heading,
+  .interrogation-sidebar-footer {
+    display: none;
+  }
+
+  /* Horizontal scrolling navigation */
   .interrogation-nav {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 5px;
+
     width: 100%;
-    padding: 0 12px 8px;
+    margin-top: 0;
+    padding: 0 16px 10px;
+
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
@@ -504,41 +549,52 @@ export default function Interrogation() {
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 8px;
+
     width: auto;
     min-height: 38px;
-    padding: 9px 12px;
+    padding: 9px 10px;
+
     border: 1px solid transparent;
-    border-bottom: 2px solid transparent;
+    color: #dfcdb0;
+    background: transparent;
+
     font-size: 11px;
     white-space: nowrap;
   }
 
-  .interrogation-nav-link.active {
+  .interrogation-nav-link:hover {
     border-color: transparent;
+    color: #fff0d0;
+    background: rgba(107, 75, 43, 0.5);
+  }
+
+  .interrogation-nav-link.active {
+    border-color: #d7b778;
     border-bottom-color: #d7b778;
-    background: rgba(215, 183, 120, 0.12);
-    color: #f5edd2;
+    color: #21150b;
+    background: #d7b778;
   }
 
   .interrogation-nav-icon {
-    flex: 0 0 16px;
-    width: 16px;
-    height: 16px;
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
   }
 
-  .interrogation-sidebar-footer {
-    display: none;
-  }
-
+  /* Main content below the navbar */
   .interrogation-main {
-    min-height: 70vh;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 100vh;
     margin-left: 0;
     background-attachment: scroll;
   }
 
   .interrogation-content {
-    padding: 32px 18px 44px;
+    width: 100%;
+    padding: 30px 18px 44px;
   }
 
   .interrogation-title {
@@ -555,6 +611,45 @@ export default function Interrogation() {
 
   .interrogation-quote {
     font-size: 17px;
+  }
+}
+
+@media (max-width: 420px) {
+  .interrogation-brand {
+    padding: 14px 12px;
+    gap: 8px;
+  }
+
+  .interrogation-brand-image {
+    flex-basis: 38px;
+    width: 38px;
+    height: 42px;
+  }
+
+  .interrogation-brand-title {
+    font-size: 16px;
+  }
+
+  .interrogation-brand-subtitle {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+
+  .interrogation-nav {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .interrogation-main {
+    padding: 0;
+  }
+
+  .interrogation-content {
+    padding: 26px 14px 36px;
+  }
+
+  .interrogation-title {
+    font-size: 30px;
   }
 }
         @media (prefers-reduced-motion: reduce) {
