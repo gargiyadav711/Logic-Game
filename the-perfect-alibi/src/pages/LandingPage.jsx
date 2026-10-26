@@ -4,6 +4,59 @@ import navbarVintage from "./navbar-vintage.jpg";
 import landingImage from "./landing.jpg";
 import magnifierImage from "./detective-magnifier.jpg";
 import LightShaftText from "../components/LightShaftText";
+
+const tutorialSteps = [
+  {
+    number: "01",
+    title: "Investigate the Crime Scene",
+    description:"Read the case briefing carefully. Understand what happened, when it happened, and who was involved. Explore the available clues to uncover important details.",
+  },
+  {
+    number: "02",
+    title: "Examine the Suspects",
+    description:"Review each suspect's profile, motive, alibi, and statements. Look for details that do not match the available evidence.",
+  },
+  {
+    number: "03",
+    title: "Analyze the Evidence",
+    description: "Inspect photographs, documents, witness accounts, and physical clues. Determine what each piece of evidence actually proves.",
+  },
+  {
+    number: "04",
+    title: "Connect Clues on the Evidence Board",
+    description:"Connect relevant evidence with suspect statements. Identify which claims are supported, contradicted, or still unresolved.",
+  },
+  {
+    number: "05",
+    title: "Reconstruct the Timeline",
+    description:"Arrange events in chronological order. Compare timestamps and witness accounts to uncover impossible timings and inconsistent alibis.",
+  },
+  {
+    number: "06",
+    title: "Challenge Suspect Statements",
+    description:"Select a suspicious claim and challenge it using relevant evidence. Build a logical argument instead of making assumptions.",
+  },
+  {
+    number: "07",
+    title: "Make Your Final Accusation",
+    description:"Identify the culprit and submit your conclusion. Explain how the evidence and contradictions support your accusation.",
+  },
+  {
+    number: "08",
+    title: "Earn Your Detective Score",
+    description:"Earn points for correct deductions, evidence connections, contradiction detection, timeline accuracy, and a well-supported accusation.",
+  },
+  {
+    number: "09",
+    title: "Track Your Progress",
+    description:"Review completed investigations, saved progress, detective scores, and newly unlocked cases as you advance.",
+  },
+  {
+    number: "10",
+    title: "Master Every Difficulty",
+    description:"Progress through increasingly difficult mysteries featuring conflicting alibis, unreliable timestamps, misleading statements, and interconnected clues.",
+  },
+];
 function GlyphWall() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -52,7 +105,10 @@ function GlyphWall() {
           characters[
             Math.floor(Math.random() * characters.length)
           ];
-        ctx.fillStyle = Math.random() > 0.88? "rgba(255, 225, 157, 0.75)" : "rgba(201, 160, 91, 0.32)";
+        ctx.fillStyle =
+          Math.random() > 0.88
+            ? "rgba(255, 225, 157, 0.75)"
+            : "rgba(201, 160, 91, 0.32)";
         ctx.fillText(character, x, y);
         if (y > height && Math.random() > 0.975) {
           drops[i] = 0;
@@ -70,11 +126,17 @@ function GlyphWall() {
       ctx.font = `${fontSize}px Georgia, serif`;
       ctx.textAlign = "center";
       for (let i = 0; i < columns; i++) {
-        for (let j = 0; j < Math.ceil(height / fontSize); j++) {
+        for (
+          let j = 0;
+          j < Math.ceil(height / fontSize);
+          j++
+        ) {
           if (Math.random() > 0.58) {
             ctx.fillStyle = "rgba(201, 160, 91, 0.24)";
             ctx.fillText(
-              characters[Math.floor(Math.random() * characters.length)],
+              characters[
+                Math.floor(Math.random() * characters.length)
+              ],
               i * fontSize + fontSize / 2,
               j * fontSize
             );
@@ -91,16 +153,20 @@ function GlyphWall() {
   }, []);
 
   return (
-    <canvas ref={canvasRef} className="glyph-wall-canvas" aria-hidden="true"/>
+    <canvas
+      ref={canvasRef}
+      className="glyph-wall-canvas"
+      aria-hidden="true"
+    />
   );
 }
-
 export default function LandingPage() {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const message ="Every mystery leaves a trace. Every alibi hides a truth.";
   const [displayedText, setDisplayedText] = useState("");
   const [deleting, setDeleting] = useState(false);
+  const [activeTutorial, setActiveTutorial] = useState(null);
   useEffect(() => {
     let timeout;
     if (!deleting && displayedText === message) {
@@ -116,7 +182,6 @@ export default function LandingPage() {
         );
       }, deleting ? 30 : 65);
     }
-
     return () => clearTimeout(timeout);
   }, [displayedText, deleting, message]);
   useEffect(() => {
@@ -125,29 +190,28 @@ export default function LandingPage() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {
-          });
+          video.play().catch(() => {});
         } else {
           video.pause();
         }
       },
       { threshold: 0.4 }
     );
-
     observer.observe(video);
     return () => {
       observer.disconnect();
       video.pause();
     };
   }, []);
-
   return (
     <main className="landing-page">
-      <div className="landing-background"
+      <div
+        className="landing-background"
         style={{
           backgroundImage: `url(${landingImage})`,
         }}
-        aria-hidden="true"/>
+        aria-hidden="true"
+      />
       <div className="landing-overlay" aria-hidden="true" />
       <div className="ambient-particles" aria-hidden="true">
         {Array.from({ length: 18 }, (_, i) => (
@@ -162,11 +226,11 @@ export default function LandingPage() {
           />
         ))}
       </div>
-      <header
-        className="vintage-banner"
+      <header className="vintage-banner"
         style={{
           backgroundImage: `url(${navbarVintage})`,
-        }}>
+        }}
+      >
         <div className="banner-depth" aria-hidden="true" />
         <img src={magnifierImage} alt="" className="banner-magnifier"/>
         <div className="banner-text">
@@ -226,7 +290,7 @@ export default function LandingPage() {
           <span className="divider-diamond">✧</span>
           <span />
         </div>
-        <section className="mystery-video-section" aria-label="Mystery introduction video" >
+        <section className="mystery-video-section"aria-label="Mystery introduction video">
           <p className="video-eyebrow">
             <span className="video-line" />
             THE CASE BEGINS
@@ -246,14 +310,120 @@ export default function LandingPage() {
             </video>
           </div>
         </section>
-        <button className="investigation-button" onClick={() => navigate("/dashboard")}>
+        <button
+          className="investigation-button"
+          onClick={() => navigate("/dashboard")}
+        >
           <span>START INVESTIGATION</span>
           <span className="button-arrow" aria-hidden="true" />
         </button>
-        <div className="hero-stamp" aria-hidden="true">
-          <span>CLASSIFIED</span>
-          <span>CASE FILE</span>
-        </div>
+        <section className="how-to-play" aria-labelledby="tutorial-heading">
+          <div className="tutorial-heading">
+            <span className="tutorial-eyebrow">
+              ❧ &nbsp; YOUR DETECTIVE'S HANDBOOK &nbsp; ❧
+            </span>
+            <h2 id="tutorial-heading">HOW TO PLAY</h2>
+            <p>
+              Follow the trail. Question every alibi. Discover
+              the truth.
+            </p>
+            <div className="tutorial-heading-divider">
+              <span />
+              ✧
+              <span />
+            </div>
+          </div>
+          <div className="tutorial-path">
+            <svg
+              className="tutorial-path-line"
+              viewBox="0 0 1000 500"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="
+                  M 100 55
+                  C 230 15, 300 100, 450 55
+                  S 750 20, 900 65
+                  C 1030 110, 940 180, 800 180
+                  S 350 150, 150 190
+                  C 10 230, 70 300, 250 310
+                  S 700 280, 900 330
+                  C 1010 370, 900 440, 700 440
+                  S 300 420, 100 455
+                "
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="7 9"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="tutorial-grid">
+              {tutorialSteps.map((step, index) => (
+                <button
+                  type="button"
+                  key={step.number}
+                  className={`tutorial-step ${
+                    activeTutorial === index
+                      ? "tutorial-step-active"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    setActiveTutorial((current) =>
+                      current === index ? null : index
+                    );
+                  }}
+                  onMouseEnter={() => setActiveTutorial(index)}
+                  onMouseLeave={() => setActiveTutorial(null)}
+                  onFocus={() => setActiveTutorial(index)}
+                  onBlur={(event) => {
+                    if (
+                      !event.currentTarget.contains(
+                        event.relatedTarget
+                      )
+                    ) {
+                      setActiveTutorial(null);
+                    }
+                  }}
+                  aria-expanded={activeTutorial === index}
+                  aria-controls={`tutorial-detail-${step.number}`}
+                >
+                  <span className="tutorial-number">
+                    {step.number}
+                  </span>
+                  <span className="tutorial-step-title">
+                    {step.title}
+                  </span>
+                  <span
+                    id={`tutorial-detail-${step.number}`}
+                    className="tutorial-popup"
+                    aria-hidden={activeTutorial !== index}
+                  >
+                    <span className="tutorial-popup-label">
+                      CASE NOTE {step.number}
+                    </span>
+                    <span className="tutorial-popup-title">
+                      {step.title}
+                    </span>
+                    <span className="tutorial-popup-description">
+                      {step.description}
+                    </span>
+                    <span className="tutorial-popup-footer">
+                      <span>DETECTIVE'S FILE</span>
+                      <span>✧</span>
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="tutorial-footer">
+            <p>
+              Every clue matters. Every contradiction counts.
+            </p>
+          </div>
+        </section>
       </section>
     </main>
   );

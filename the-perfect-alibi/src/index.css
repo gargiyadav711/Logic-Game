@@ -2453,3 +2453,435 @@ img.banner-magnifier {
     opacity: 0.35;
   }
 }
+
+/* =========================================
+   HOW TO PLAY — DETECTIVE INVESTIGATION PATH
+========================================= */
+
+.how-to-play {
+  position: relative;
+  isolation: isolate;
+  width: min(1100px, 94%);
+  margin: 85px auto 35px;
+  padding: 38px 18px 30px;
+  color: #f3e3bd;
+}
+
+.tutorial-heading {
+  margin-bottom: 45px;
+  text-align: center;
+}
+
+.tutorial-eyebrow {
+  display: block;
+  margin-bottom: 15px;
+  color: #c9a05b;
+  font-family: Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+.tutorial-heading h2 {
+  margin: 0;
+  color: #f3e3bd;
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 24px rgba(201, 160, 91, 0.15);
+}
+
+.tutorial-heading > p {
+  margin: 15px 0;
+  color: #c6b89c;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.tutorial-heading-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+  color: #d8ad61;
+}
+
+.tutorial-heading-divider span {
+  width: 75px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a05b);
+}
+
+.tutorial-heading-divider span:last-child {
+  transform: rotate(180deg);
+}
+
+/* Winding path */
+
+.tutorial-path {
+  position: relative;
+  isolation: isolate;
+}
+
+.tutorial-path-line {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #c9a05b;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Tutorial cards */
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 34px;
+  row-gap: 52px;
+  align-items: stretch;
+}
+
+.tutorial-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  min-height: 150px;
+  padding: 30px 20px 20px;
+  border: 1px solid rgba(201, 160, 91, 0.52);
+  border-radius: 3px 12px 4px 10px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 225, 184, 0.1),
+      rgba(22, 19, 15, 0.94) 55%
+    ),
+    #171510;
+  color: #f3e3bd;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.tutorial-step::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201, 160, 91, 0.12);
+  pointer-events: none;
+}
+
+.tutorial-step:hover,
+.tutorial-step:focus-visible,
+.tutorial-step-active {
+  z-index: 5;
+  transform: translateY(-4px);
+  border-color: #e8c477;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.35),
+    0 0 22px rgba(201, 160, 91, 0.12);
+  outline: none;
+}
+
+.tutorial-number {
+  position: absolute;
+  top: -15px;
+  left: 15px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #e7c987;
+  border-radius: 50%;
+  background: #c9a05b;
+  color: #18130c;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 0 0 5px rgba(15, 14, 12, 0.9);
+}
+
+.tutorial-card-icon {
+  margin-bottom: 12px;
+  color: #dcb46d;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.tutorial-step-title {
+  display: block;
+  max-width: 100%;
+  color: #f5e7c9;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.tutorial-hover-hint {
+  margin-top: 12px;
+  color: #b99a60;
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  opacity: 0.75;
+}
+
+/* Parchment popup */
+
+.tutorial-popup {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: min(320px, 88vw);
+  padding: 22px 22px 16px;
+  border: 1px solid #c6a467;
+  border-radius: 3px;
+  background:
+    radial-gradient(
+      ellipse at top left,
+      rgba(255, 255, 255, 0.48),
+      transparent 65%
+    ),
+    linear-gradient(135deg, #f1dfb9, #dfc395);
+  color: #302317;
+  box-shadow:
+    0 14px 45px rgba(0, 0, 0, 0.55),
+    inset 0 0 22px rgba(104, 69, 29, 0.1);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 8px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+/* Prevent popups from extending past the side cards */
+
+.tutorial-step:nth-child(3n + 1) .tutorial-popup {
+  left: 0;
+  transform: translateY(8px);
+}
+
+.tutorial-step:nth-child(3n) .tutorial-popup {
+  right: 0;
+  left: auto;
+  transform: translateY(8px);
+}
+
+.tutorial-step:hover .tutorial-popup,
+.tutorial-step:focus-visible .tutorial-popup,
+.tutorial-step-active .tutorial-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.tutorial-step:nth-child(3n + 1):hover .tutorial-popup,
+.tutorial-step:nth-child(3n + 1):focus-visible .tutorial-popup,
+.tutorial-step:nth-child(3n + 1).tutorial-step-active .tutorial-popup,
+.tutorial-step:nth-child(3n):hover .tutorial-popup,
+.tutorial-step:nth-child(3n):focus-visible .tutorial-popup,
+.tutorial-step:nth-child(3n).tutorial-step-active .tutorial-popup {
+  transform: translateY(0);
+}
+
+.tutorial-popup-label {
+  margin-bottom: 9px;
+  color: #84602d;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.tutorial-popup-title {
+  margin-bottom: 10px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.tutorial-popup-description {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.tutorial-popup-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(87, 58, 28, 0.25);
+  color: #84602d;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+/* Tutorial footer */
+
+.tutorial-footer {
+  margin-top: 65px;
+  text-align: center;
+}
+
+.tutorial-footer-stamp {
+  display: inline-block;
+  padding: 9px 15px;
+  border: 1px solid rgba(201, 160, 91, 0.6);
+  color: #d9b56f;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  transform: rotate(-2deg);
+}
+
+.tutorial-footer p {
+  margin-top: 25px;
+  color: #c6b89c;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Tablet */
+
+@media (max-width: 760px) {
+  .how-to-play {
+    width: 100%;
+    margin-top: 55px;
+    padding: 30px 12px;
+  }
+
+  .tutorial-heading {
+    margin-bottom: 35px;
+  }
+
+  .tutorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 16px;
+  }
+
+  .tutorial-step {
+    min-height: 155px;
+    padding: 26px 13px 16px;
+  }
+
+  .tutorial-step-title {
+    font-size: 15px;
+  }
+
+  .tutorial-popup {
+    width: min(300px, 85vw);
+  }
+
+  .tutorial-step:nth-child(odd) .tutorial-popup {
+    right: auto;
+    left: 0;
+    transform: translateY(8px);
+  }
+
+  .tutorial-step:nth-child(even) .tutorial-popup {
+    right: 0;
+    left: auto;
+    transform: translateY(8px);
+  }
+
+  .tutorial-step:nth-child(odd):hover .tutorial-popup,
+  .tutorial-step:nth-child(odd):focus-visible .tutorial-popup,
+  .tutorial-step:nth-child(odd).tutorial-step-active .tutorial-popup,
+  .tutorial-step:nth-child(even):hover .tutorial-popup,
+  .tutorial-step:nth-child(even):focus-visible .tutorial-popup,
+  .tutorial-step:nth-child(even).tutorial-step-active .tutorial-popup {
+    transform: translateY(0);
+  }
+
+  .tutorial-path-line {
+    opacity: 0.3;
+  }
+
+  .tutorial-footer {
+    margin-top: 45px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 420px) {
+  .tutorial-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .tutorial-step {
+    min-height: 125px;
+    padding: 24px 18px 17px;
+  }
+
+  .tutorial-step-title {
+    font-size: 16px;
+  }
+
+  .tutorial-popup {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: 100%;
+    max-height: 0;
+    margin-top: 0;
+    padding: 0 14px;
+    overflow: hidden;
+    border: 0;
+    box-shadow: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    transition:
+      max-height 220ms ease,
+      opacity 180ms ease,
+      margin 220ms ease,
+      padding 220ms ease;
+  }
+
+  .tutorial-step:hover .tutorial-popup,
+  .tutorial-step:focus-visible .tutorial-popup,
+  .tutorial-step-active .tutorial-popup {
+    max-height: 300px;
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #c6a467;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .tutorial-path-line {
+    display: none;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial-step,
+  .tutorial-popup {
+    transition: none;
+  }
+}

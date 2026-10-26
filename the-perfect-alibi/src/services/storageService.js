@@ -77,6 +77,7 @@ export function getHistory() {
 export function saveAttempt(attempt) {
   const history = getHistory();
   if (!history.some((entry) => entry.attemptId === attempt.attemptId)) {
+    //newest attempt appears first in the history
     history.unshift(attempt);
     writeJSON(STORAGE_KEYS.history, history);
   }
